@@ -20,10 +20,11 @@ function Home(props) {
   const [date, setDate] = useState();
   useEffect(() => {
     axios
-      .get(url + "&serviceKey=" + serviceKey)
+      .get("http://localhost:5050/" + url + "&serviceKey=" + serviceKey)
       .then((response) => {
-        console.log("kks", response.data.response.body.items[0].dataTime);
-        const current = response.data.response.body.items[0];
+        console.log("kks", response);
+        const current = response.data.body.items[0];
+        // const current = response.data.response.body.items[0];
         const airTemp = [
           { grade: current.khaiGrade, value: current.khaiValue },
           { grade: current.so2Grade, value: current.so2Value },
@@ -48,6 +49,7 @@ function Home(props) {
         <div style={{ textAlign: "right" }}>{date}</div>
         {airState.map((state, index) => (
           <Card
+            key={airList[index]}
             title={airList[index]}
             grade={state.grade}
             value={state.value}
